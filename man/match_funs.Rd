@@ -7,14 +7,17 @@
 \alias{match_layers}
 \title{Find available sections, services, or layers using a regular expression}
 \usage{
-match_sections(...)
+match_sections(..., exact = FALSE)
 
-match_services(..., sections = NULL, pull = TRUE)
+match_services(..., sections = NULL, pull = TRUE, exact = FALSE)
 
-match_layers(..., sections = NULL, services = NULL, pull = TRUE)
+match_layers(..., sections = NULL, services = NULL, pull = TRUE, exact = FALSE)
 }
 \arguments{
 \item{...}{Character vector or regular expression to match on}
+
+\item{exact}{Logical stating whether to match objects in \code{...} exactly
+or loosely}
 
 \item{sections}{A character vector of available sections to subset by}
 

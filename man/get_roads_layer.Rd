@@ -23,9 +23,9 @@ watershed}
 \item{watershed_name}{A character object specifying the HUC name for a
 watershed}
 
-\item{sf_object}{Any sf object}
+\item{sf_object}{Any sf polygon object}
 
-\item{where}{A SQL statement}
+\item{where}{SQL statement}
 
 \item{layer_type}{"major_roads" or "minor_roads"}
 

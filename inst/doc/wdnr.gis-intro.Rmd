@@ -38,7 +38,10 @@ from an ArcGIS REST API and convert them to an sf object in R. All other
 functions in wdnr.gis are just wrappers around functions within 
 arcpullr and sf that are specific to WDNR's ArcGIS REST API.
 
-# Pulling specific layers
+\
+\
+
+# Pulling Specific Feature Layers
 
 There are a handful of functions that are written specifically to query certain
 commonly used layers by using either a spatial or a SQL query. The querying is
@@ -64,6 +67,39 @@ Current functions that query specific WDNR layers are `get_hydro_layer`,
 available upon request. If you have a layer that you use a lot, email us with a 
 request for a layer specific function and we can add it in (especially if it 
 will be useful to many others as well).
+
+\
+\
+
+# Pulling Specific Map and Image Layers
+
+These functions work similarly to the other specific feature layer functions, 
+but they query the WDNR's map and image services instead and return a raster.
+
+To get landcover data use the `get_wis_landcover` function. For aerial imagery
+use the `get_wis_imagery` function.
+
+```{r}
+portage_lc <- get_wis_landcover(county = "portage")
+plot_layer(portage_lc)
+```
+
+The specific landcover service to be queried can be altered using the `service`
+argument. A full list of available services can be found by running 
+`list_services(section = "DW_Land_Cover")`.
+
+
+```{r}
+portage_imagery <- get_wis_imagery(county = "portage")
+plot_layer(portage_imagery)
+```
+
+Similar to `get_wis_landcover` the service to be queried can be altered using
+the `service` argument. A full list of available image services can be found by 
+running  `list_services(section = "DW_Image")`.
+
+\
+\
 
 # Finding Sections, Services, and Layers
 

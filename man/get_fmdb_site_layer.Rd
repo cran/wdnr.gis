@@ -25,13 +25,13 @@ watershed}
 \item{watershed_name}{A character object specifying the HUC name for a
 watershed}
 
-\item{sf_object}{Any sf object}
+\item{sf_object}{Any sf polygon object}
 
 \item{site_seq}{A character object or string}
 
 \item{swims_site_seq}{A character object or string}
 
-\item{where}{A SQL statement}
+\item{where}{SQL statement}
 
 \item{layer_type}{Character. Retrieve point stations, polygon stations, or
 both.}

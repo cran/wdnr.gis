@@ -11,12 +11,8 @@
 #' subbasin (HUC8), watershed (HUC 10), or subwatershed (HUC 12) spatial layers.
 #' Use 'watershed_lookup' to see a full list of available HUC codes and names.
 #'
-#' @param watershed_code A character object specifying the HUC code for a watershed
-#' @param watershed_name A character object specifying the HUC name for a watershed
-#' @param county A character object specifying a county
-#' @param sf_object Any sf object
+#' @inheritParams get_hydro_layer
 #' @param huc_level "HUC_8","HUC_10", or "HUC_12"
-#' @param where A SQL statement
 #' @param ... Additional parameters that are passed to
 #' \code{\link[arcpullr]{get_spatial_layer}}
 #'
@@ -281,15 +277,9 @@ get_hydro_layer <- function (county = NULL,
 #' arguement can be used to run custom SQL queries.
 #'
 #'
-#' @param county A character object specifying a county name
-#' @param watershed_code A character object specifying the HUC code for a
-#' watershed
-#' @param watershed_name A character object specifying the HUC name for a
-#' watershed
-#' @param sf_object Any sf object
+#' @inheritParams get_hydro_layer
 #' @param site_seq A character object or string
 #' @param swims_site_seq A character object or string
-#' @param where A SQL statement
 #' @param layer_type Character. Retrieve point stations, polygon stations, or
 #' both.
 #' @param ... Additional parameters to pass to
@@ -394,13 +384,7 @@ get_fmdb_site_layer <- function (county = NULL,
 #' The "where" argument can be used to run custom SQL queries.
 #'
 #'
-#' @param county A character object specifying a county name
-#' @param watershed_code A character object specifying the HUC code for a
-#' watershed
-#' @param watershed_name A character object specifying the HUC name for a
-#' watershed
-#' @param sf_object Any sf object
-#' @param where A SQL statement
+#' @inheritParams get_hydro_layer
 #' @param layer_type "major_roads" or "minor_roads"
 #' @param ... Additional parameters to pass to
 #' \code{\link[arcpullr]{get_spatial_layer}}
@@ -475,4 +459,131 @@ get_roads_layer <- function (county = NULL,
                collapse = "\n"))
   }
   return(out)
+}
+
+
+#' Get WDNR Image and Map Layers
+#'
+#' Functions to pull layers from the ImageServer and MapServer sections of the
+#' \href{https://dnrmaps.wi.gov/arcgis_image/rest/services}{
+#'   Wisconsin Department of Natural Resources ArcGIS REST API
+#' }. These are raster layers representing various maps and images throughout
+#' the state of Wisconsin. Arguments to these function can be used to specify
+#' the spatial extent of the output. If no argument is provided, the full
+#' raster will be queried.
+#'
+#' For a full list of available services use the following search options.
+#' \itemize{
+#'   \item{
+#'     get_wis_landcover
+#'   }{
+#'     -- \code{list_services(section = "DW_Land_Cover")}
+#'   }
+#'   \item{
+#'     get_wis_imagery
+#'   }{
+#'     -- \code{list_services(section = "DW_Image")}
+#'   }
+#' }
+#'
+#' @inheritParams get_hydro_layer
+#' @param service A string describing the service to be pulled.
+#' @param ... Additional arguments to be passed to \code{\link{get_map_layer}}
+#'
+#' @return A "RasterLayer" object
+#' @export
+#'
+#' @name get_wis_raster_layer
+#'
+#' @examples
+#' \dontrun{
+#' mke_forest <- get_wis_landcover(county = c("Milwaukee","Forest"))
+#' plot_layer(mke_forest, outline_poly = wi_poly, legend = FALSE)
+#'
+#'
+#' }
+get_wis_landcover <- function(service = "EN_Land_Cover2_Lev2",
+                              county = NULL,
+                              watershed_code = NULL,
+                              watershed_name = NULL,
+                              sf_object = NULL,
+                              ...) {
+  return(
+    get_wis_rasters(
+      service,
+      county = county,
+      watershed_code = watershed_code,
+      watershed_name = watershed_name,
+      sf_object = sf_object,
+      get_raster_function = arcpullr::get_map_layer, ...
+    )
+  )
+}
+
+#' @rdname get_wis_raster_layer
+#' @export
+get_wis_imagery <- function(service = "EN_Image_Basemap_Leaf_Off",
+                            county = NULL,
+                            watershed_code = NULL,
+                            watershed_name = NULL,
+                            sf_object = NULL,
+                            ...) {
+  return(
+    get_wis_rasters(
+      service,
+      county = county,
+      watershed_code = watershed_code,
+      watershed_name = watershed_name,
+      sf_object = sf_object,
+      get_raster_function = arcpullr::get_image_layer, ...
+    )
+  )
+}
+
+
+#' General function to pull Raster layers from a MapServer or ImageServer
+#'
+#' This is a non-exported function that is used as the engine for
+#' \code{\link{get_wis_landcover}} and \code{\link{get_wis_imagery}}. It
+#' converts watersheds, counties, etc. to the appropriate sf_object and
+#' queries the desired service using the function specified in
+#' \code{get_raster_function}
+#'
+#' @param service Text string describing which service to pull. Will get matched
+#' by \code{match_services(service)}.
+#' @param get_raster_function The \code{arcpullr} function to use: either
+#' \code{\link[arcpullr]{get_map_layer}} or
+#' \code{\link[arcpullr]{get_image_layer}}
+#' @inheritParams get_hydro_layer
+#' @param ... Additional arguments to pass to the \code{get_raster_function}
+#'
+#' @return A Raster* object dependent on \code{get_raster_function}
+get_wis_rasters<- function(service,
+                           get_raster_function,
+                           county = NULL,
+                           watershed_code = NULL,
+                           watershed_name = NULL,
+                           sf_object = NULL,
+                           ...) {
+
+  avoid_duplicate_sf_args(county, watershed_name, watershed_code, sf_object)
+
+  #filtering parameters
+  if (!is.null(watershed_name)) {
+    sf_poly <- get_watershed_layer(watershed_name = watershed_name)
+  } else if (!is.null(watershed_code)) {
+    sf_poly <- get_watershed_layer(watershed_code = watershed_code)
+  } else if (!is.null(county)) {
+    sf_poly <- filter_county_poly(county)
+  } else if (!is.null(sf_object)) {
+    sf_poly <- sf_object
+  } else {
+    sf_poly <- wdnr.gis::wi_poly
+  }
+
+  layer_url <- list_urls(
+    services = match_services(service, exact = TRUE)
+  )
+
+  return(get_raster_function(layer_url, sf_poly, ...))
 }

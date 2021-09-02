@@ -16,6 +16,14 @@ library(wdnr.gis)
 #  watershed <- get_watershed_layer(sf_object = pt, huc_level = "HUC_8")
 #  streams <- get_hydro_layer(sf_object = watershed)
 
+## -----------------------------------------------------------------------------
+#  portage_lc <- get_wis_landcover(county = "portage")
+#  plot_layer(portage_lc)
+
+## -----------------------------------------------------------------------------
+#  portage_imagery <- get_wis_imagery(county = "portage")
+#  plot_layer(portage_imagery)
+
 ## ---- eval = TRUE-------------------------------------------------------------
 match_sections("trout")
 match_services("trout")

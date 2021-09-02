@@ -15,17 +15,19 @@ get_watershed_layer(
 )
 }
 \arguments{
-\item{watershed_code}{A character object specifying the HUC code for a watershed}
+\item{watershed_code}{A character object specifying the HUC code for a
+watershed}
 
-\item{watershed_name}{A character object specifying the HUC name for a watershed}
+\item{watershed_name}{A character object specifying the HUC name for a
+watershed}
 
-\item{county}{A character object specifying a county}
+\item{county}{A character object specifying a county name}
 
-\item{sf_object}{Any sf object}
+\item{sf_object}{Any sf polygon object}
 
 \item{huc_level}{"HUC_8","HUC_10", or "HUC_12"}
 
-\item{where}{A SQL statement}
+\item{where}{SQL statement}
 
 \item{...}{Additional parameters that are passed to
 \code{\link[arcpullr]{get_spatial_layer}}}

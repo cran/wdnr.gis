@@ -8,7 +8,7 @@ test_markers <- arcpullr::sf_points(
   c(-88.49072, 45.44492))
 #build sf_linestring object
 test_line <-
-  arcpullr::sf_lines(
+  arcpullr::sf_line(
     c(-88.52999, 45.4358),
     c(-88.53045, 45.43903))
 #build sf_multilinestring object
@@ -156,7 +156,7 @@ test_markers <-
   )
 #build st_linestring object
 test_line <-
-  arcpullr::sf_lines(
+  arcpullr::sf_line(
     c(-87.93575, 43.03633),
     c(-87.93577, 43.03527)
   )

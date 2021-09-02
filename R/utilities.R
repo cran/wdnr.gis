@@ -157,6 +157,8 @@ list_layer_url <- function(type = "layer", sections = NULL, services = NULL,
 #' layer but want to search based on keywords
 #'
 #' @param ... Character vector or regular expression to match on
+#' @param exact Logical stating whether to match objects in \code{...} exactly
+#' or loosely
 #'
 #' @return A character vector of all matching sections, services, or layers
 #' appropriate to the called function
@@ -168,8 +170,11 @@ list_layer_url <- function(type = "layer", sections = NULL, services = NULL,
 #' match_sections("WT")
 #' match_services("Fish", sections = match_sections("WT"))
 #' match_layers("Fish", sections = match_sections("WT"))
-match_sections <- function(...) {
+match_sections <- function(..., exact = FALSE) {
   x <- unlist(list(...))
+  if (exact) {
+    x <- paste0("^", x, "$")
+  }
   out <-
     lapply(x, function(y) {
       grep(y, unique(wdnr.gis::service_urls$section),
@@ -183,8 +188,11 @@ match_sections <- function(...) {
 #' @param pull Logical. Pull unique values (TRUE, default) or show the matching
 #' rows in the service_urls data.frame
 #' @export
-match_services <- function(..., sections = NULL, pull = TRUE) {
+match_services <- function(..., sections = NULL, pull = TRUE, exact = FALSE) {
   x <- unlist(list(...))
+  if (exact) {
+    x <- paste0("^", x, "$")
+  }
   out <-
     lapply(x, function(y) {
       if (!is.null(sections)) {
@@ -204,7 +212,10 @@ match_services <- function(..., sections = NULL, pull = TRUE) {
     out <-
       wdnr.gis::service_urls %>%
       dplyr::filter(.data$service %in% tmp) %>%
-      dplyr::select(.data$section, .data$service, .data$layer)
+      dplyr::select(.data$section,
+                    .data$service,
+                    .data$layer,
+                    .data$layer_type)
     return(out)
   } else {
     return(unlist(out))
@@ -214,8 +225,12 @@ match_services <- function(..., sections = NULL, pull = TRUE) {
 #' @rdname match_funs
 #' @param services A character vector of available services to subset by
 #' @export
-match_layers <- function(..., sections = NULL, services = NULL, pull = TRUE) {
+match_layers <- function(..., sections = NULL, services = NULL,
+                         pull = TRUE, exact = FALSE) {
   x <- unlist(list(...))
+  if (exact) {
+    x <- paste0("^", x, "$")
+  }
   out <-
     lapply(x, function(y) {
       if (!is.null(sections) & !is.null(services)) {
@@ -308,6 +323,22 @@ avoid_duplicate_sf_args <- function(...) {
   }
 }
 
+# find_sf_query_object <- function(...) {
+#   args <- list(...)
+#   if (!is.null(args$watershed_name)) {
+#     sf_poly <- get_watershed_layer(watershed_name = args$watershed_name)
+#   } else if (!is.null(args$watershed_code)) {
+#     sf_poly <- get_watershed_layer(watershed_code = args$watershed_code)
+#   } else if (!is.null(args$county)) {
+#     sf_poly <- filter_county_poly(args$county)
+#   } else if (!is.null(args$sf_object)) {
+#     sf_poly <- sf_object
+#   } else {
+#     sf_poly <- wdnr.gis::wi_poly
+#   }
+#   return(sf_poly)
+# }
+
 #' @rdname check_args
 deparse_arg_names <- function(...) {
   arg_names <- gsub("list\\(|\\)", "", deparse(substitute(list(...))))
@@ -331,26 +362,29 @@ find_layer_query <- function(url, query, input_geometry, ...) {
     out <- arcpullr::get_spatial_layer(
       url = url, where = query, ...
     )
-  } else if (grepl("POLYGON", input_geom_type)) {
+  } else if (all(grepl("POLYGON", input_geom_type))) {
     out <- arcpullr::get_layer_by_poly(
       url = url, geometry = input_geometry, where = query, ...
     )
-  } else if (grepl("LINE", input_geom_type)) {
+  } else if (all(grepl("LINE", input_geom_type))) {
     out <- arcpullr::get_layer_by_line(
       url = url, geometry = input_geometry, where = query, ...
     )
-  } else if (input_geom_type == "POINT") {
+  } else if (all(input_geom_type == "POINT")) {
     out <- arcpullr::get_layer_by_point(
       url = url, geometry = input_geometry, where = query, ...
     )
-  } else if (input_geom_type == "MULTIPOINT") {
+  } else if (all(input_geom_type == "MULTIPOINT")) {
     out <- arcpullr::get_layer_by_point(
       url = url, geometry = input_geometry, where = query, ...
     )
-  } else if (input_geom_type == "bbox") {
+  } else if (all(input_geom_type == "bbox")) {
     out <- arcpullr::get_layer_by_envelope(
       url = url, geometry = input_geometry, where = query, ...
     )
+  } else {
+    stop("Sorry, something went wrong with your query. ",
+         "Check your arguments to make sure you didn't miss something.")
   }
   return(out)
 }
