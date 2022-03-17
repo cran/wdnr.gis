@@ -118,7 +118,8 @@ match_layers("trout stream")
 There are also functions to find specific sections, services, and layers when 
 the name is known. These are most useful when trying to obtain a URL for a 
 specific layer.
- ```{r, eval = TRUE}
+
+```{r, eval = TRUE}
 list_services("FM_Trout")
 ```
 

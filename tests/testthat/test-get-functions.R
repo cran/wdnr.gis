@@ -200,7 +200,7 @@ test_that("get_roads_layer - spatial query by sf_multipoint returns
               sf_object = test_markers,
               layer_type ="major_roads",
               sp_rel = "esriSpatialRelIntersects")
-            expect_equal(roads$OSM_ID[2],"518352630")
+            expect_equal(roads$NAME[1:2],c("East-West Freeway", "Zoo Freeway"))
           })
 test_that("get_roads_layer - sql where statement returns the correct
           road name",{

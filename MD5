@@ -1,4 +1,4 @@
-34b26b97faab9c9487707e26856d9a78 *DESCRIPTION
+9f6194898720a40d9feab7a001935bb5 *DESCRIPTION
 a30b847f0afc2c13babeaea3e53898db *NAMESPACE
 505180cd02ec1d1bc337b84c4cf1c4cd *R/data.R
 fd87d905a73d18f8775c7fa22f43caf6 *R/filter_layers.R
@@ -6,16 +6,16 @@ fd87d905a73d18f8775c7fa22f43caf6 *R/filter_layers.R
 345a7d8ebfce48288d2d7987b1af1450 *R/imports.R
 b5c699feaa5995d0ce610944d29cd1ce *R/sf_polygon_data.R
 1d0ac392ef3106ff1a5d8d41ec0714ef *R/url_objects.R
-2f15476e0ec5481db03e3bd4a063e975 *R/utilities.R
+842c5e331304494cf6cae1cc315632b3 *R/utilities.R
 96b342861b21d35aa410b986424557ea *R/wdnr.gis-package.R
-3e76289ee92d56dba542d310e0bd6040 *build/vignette.rds
+8c9a1143e884d55ecf77b6f51349a579 *build/vignette.rds
 1e698ffd0000ff957dee177ce14ecc50 *data/service_urls.rda
 9062e6871efc3814b50264c4aa4c67bf *data/watershed_lookup.rda
 df9848d39962de4d83bc6f42216f696c *data/wi_counties.rda
 c27cad9f76538379cd5e1d4f7fa60a26 *data/wi_poly.rda
 e7199ef62a0c00e5fbcf94231d5ab09b *inst/doc/wdnr.gis-intro.R
-50928ad97e9cdddaaa03773a1a8d40a0 *inst/doc/wdnr.gis-intro.Rmd
-1e7af43d930eb287e5edbce1569f8ab9 *inst/doc/wdnr.gis-intro.html
+09cf49af8749f8d5149d40db012a19ae *inst/doc/wdnr.gis-intro.Rmd
+742738ac69ca357537c493f6d4c5ba23 *inst/doc/wdnr.gis-intro.html
 835c7a6b446a8b3146c826a6b15ba869 *man/check_args.Rd
 84e1838615b6d4b961fb6b37af691b5a *man/figures/logo.png
 6f03da282a85b82ed246d00a5d0bd60b *man/filter_county_poly.Rd
@@ -35,6 +35,6 @@ d40098c4e706234d920088822095da2f *man/standardize_county_names.Rd
 5a01269d28e5f13bd6e00e6ae34ee30c *man/wi_example_polys.Rd
 070734c562eb7d6d97f2d9d3d1e7a627 *tests/testthat.R
 2d0aea3c3706c5c15f6f72d16a579c1f *tests/testthat/test-filter-layers.R
-c8573d909dba186856e62d4c20541f1d *tests/testthat/test-get-functions.R
+2eb69b59a5b201d46aa2cda30498fcbd *tests/testthat/test-get-functions.R
 99621b8faea5a9766f7f132818daad41 *tests/testthat/test-utils.R
-50928ad97e9cdddaaa03773a1a8d40a0 *vignettes/wdnr.gis-intro.Rmd
+09cf49af8749f8d5149d40db012a19ae *vignettes/wdnr.gis-intro.Rmd

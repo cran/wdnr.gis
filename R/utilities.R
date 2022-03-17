@@ -350,15 +350,15 @@ deparse_arg_names <- function(...) {
 find_layer_query <- function(url, query, input_geometry, ...) {
 
   # first check the input geometry type
-  if ("sf" %in% class(input_geometry)) {
+  if (inherits(input_geometry, "sf")) {
     input_geom_type <- sf::st_geometry_type(input_geometry)
-  } else if (class(input_geometry) == "bbox") {
+  } else if (inherits(input_geometry, "bbox")) {
     input_geom_type <- "bbox"
   } else {
     input_geom_type <- NULL
   }
 
-  if (!("sf" %in% class(input_geometry))) {
+  if (!inherits(input_geometry, "sf")) {
     out <- arcpullr::get_spatial_layer(
       url = url, where = query, ...
     )
