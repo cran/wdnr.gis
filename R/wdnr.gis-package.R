@@ -3,7 +3,8 @@
 #' A package to pull spatial layers from the Wisconsin DNR ArcGIS
 #' REST API
 #'
-#' \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+#' \if{html}{\figure{logo.png}{options: alt='logo' width='15\%'}}
+#' \if{latex}{\figure{logo.png}{options: width=0.5in}}
 #'
 #' The wdnr.gis package provides shortcut functions for working with various
 #' spatial layers on the WDNR ArcGIS REST API. Currently, these include:
