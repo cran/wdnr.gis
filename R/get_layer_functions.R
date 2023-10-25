@@ -202,14 +202,26 @@ get_hydro_layer <- function (county = NULL,
                              sf_object = NULL,
                              wbic = NULL,
                              where = NULL,
-                             layer_type = "lines",
+                             layer_type = "polygons",
                              ...) {
   # error catching
-  if (is.null(layer_type) |
-      !layer_type %in% c("lines", "polygons", "flow", "flowlines")) {
+  line_types <- c("line", "lines", "polyline", "polylines")
+  poly_types <- c("poly", "polygon", "polygons")
+  flow_types <- c("flow", "flowline", "flowlines")
+  accepted_layer_types <- c(
+    line_types,
+    poly_types,
+    flow_types
+  )
+  if (is.null(layer_type) | !layer_type %in% accepted_layer_types) {
     stop(
-      "'layer_type' must be equal to either 'lines', 'polygons'",
-      "'flow', or 'flowlines'"
+      paste(
+        "'layer_type' must be one of the following \n",
+        paste0("* ", paste0(line_types, collapse = ", ")),
+        paste0("* ", paste0(poly_types, collapse = ", ")),
+        paste0("* ", paste0(flow_types, collapse = ", ")),
+        sep = "\n"
+      )
     )
   }
 
@@ -227,9 +239,9 @@ get_hydro_layer <- function (county = NULL,
   } else if (!is.null(where)){
     query <- where
   } else if (!is.null(wbic)) {
-    if (layer_type == "lines"){
+    if (layer_type %in% c(line_types, flow_types)) {
       query <- arcpullr::sql_where(RIVER_SYS_WBIC = wbic)
-    } else if(layer_type == "polygons"){
+    } else if(layer_type %in% poly_types){
       query <- arcpullr::sql_where(WATERBODY_WBIC = wbic)
     }
   } else {
@@ -251,16 +263,16 @@ get_hydro_layer <- function (county = NULL,
 
 
   # get the appropriate url based on what is desired
-  if (layer_type == "lines") {
-    url <- list_urls(layers = "24K Hydrography Streams and Rivers")
-  } else if (layer_type == "flow" || layer_type == "flowlines") {
-    url <- list_urls(layers = "24K Flowlines")
-  } else if (layer_type == "polygons") {
-    url <- list_urls(layers = "24K Hydrography Lakes and Open Water")
+  if (layer_type %in% line_types) {
+    query_url <- list_urls(layers = "24K Hydrography Streams and Rivers")
+  } else if (layer_type %in% flow_types) {
+    query_url <- list_urls(layers = "24K Flowlines")
+  } else if (layer_type %in% poly_types) {
+    query_url <- list_urls(layers = "24K Hydrography Lakes and Open Water")
   }
 
   # pull the data using the appropriate function (spatial query or not)
-  out <- find_layer_query(url, query, input_geometry, ...)
+  out <- find_layer_query(query_url, query, input_geometry, ...)
 
   return(out)
 }
@@ -473,7 +485,7 @@ get_roads_layer <- function (county = NULL,
 #' raster will be queried.
 #'
 #' For a full list of available services use the following search options.
-#' \itemize{
+#' \describe{
 #'   \item{
 #'     get_wis_landcover
 #'   }{

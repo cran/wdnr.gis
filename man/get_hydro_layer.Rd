@@ -11,7 +11,7 @@ get_hydro_layer(
   sf_object = NULL,
   wbic = NULL,
   where = NULL,
-  layer_type = "lines",
+  layer_type = "polygons",
   ...
 )
 }

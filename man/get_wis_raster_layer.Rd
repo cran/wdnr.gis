@@ -53,7 +53,7 @@ raster will be queried.
 }
 \details{
 For a full list of available services use the following search options.
-\itemize{
+\describe{
   \item{
     get_wis_landcover
   }{

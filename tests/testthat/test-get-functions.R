@@ -73,16 +73,18 @@ test_that("get_hydro_layer - test that the 'layer_type' arguement uses
           the correct service and returns a multilinestring",{
   otter_creek <- get_hydro_layer(
     sf_object = test_polygon,
-    layer_type = "lines",
+    layer_type = "line",
     sp_rel = "esriSpatialRelCrosses")
   expect_equal(as.character(sf::st_geometry_type(otter_creek)),
                "MULTILINESTRING")
           })
+
 test_that("get_hydro_layer - test that sql where returns the
           correct layer",{
   otter_creek <- get_hydro_layer(where = "RIVER_SYS_WBIC = 547200")
-  expect_equal(otter_creek$ROW_NAME[1],"Otter Creek")
-  })
+  expect_equal(otter_creek$RIVER_SYS_NAME[1],"Otter Creek")
+})
+
 # get_watershed_layer -----------------------------------------------------
 test_polygon <-
   arcpullr::sf_polygon(
