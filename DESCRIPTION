@@ -1,7 +1,7 @@
 Package: wdnr.gis
 Type: Package
 Title: Pull Spatial Layers from 'WDNR ArcGIS REST API'
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: c(person(given = "Paul",
            family = "Frater",
            role = c("aut", "cre"),
@@ -20,14 +20,14 @@ Description: Functions for finding and pulling data from the
   <https://dnrmaps.wi.gov/arcgis/rest/services> and 
   <https://dnrmaps.wi.gov/arcgis2/rest/services>.
 Depends: R (>= 3.6.0), arcpullr, sf
-Imports: dplyr, ggplot2, rlang
-RoxygenNote: 7.2.3
+Imports: dplyr, rlang
+RoxygenNote: 7.3.2
 Suggests: testthat (>= 3.0.0), knitr, rmarkdown
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-10-25 18:22:59 UTC; fratepnd
-Author: Paul Frater [aut, cre] (<https://orcid.org/0000-0002-7237-6563>),
-  Zac Driscoll [aut] (<https://orcid.org/0000-0002-8233-0980>)
+Packaged: 2025-10-13 18:24:05 UTC; fratepnd
+Author: Paul Frater [aut, cre] (ORCID: <https://orcid.org/0000-0002-7237-6563>),
+  Zac Driscoll [aut] (ORCID: <https://orcid.org/0000-0002-8233-0980>)
 Repository: CRAN
-Date/Publication: 2023-10-25 18:50:02 UTC
+Date/Publication: 2025-10-13 18:40:02 UTC

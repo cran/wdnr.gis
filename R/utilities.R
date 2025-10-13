@@ -143,7 +143,7 @@ list_layer_url <- function(type = "layer", sections = NULL, services = NULL,
     out <- unique(out[, type])
   } else {
     if (type == "layer") {
-      out <- dplyr::select(out, .data$section, .data$service, .data$layer)
+      out <- dplyr::select(out, "section", "service", "layer")
     }
   }
   return(out)

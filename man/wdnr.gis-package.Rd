@@ -26,3 +26,12 @@ lakes if specified). These functions generally have the same arguments and
 can be queried by county, sf_object, watershed, or a SQL where statement.
 }
 
+\author{
+\strong{Maintainer}: Paul Frater \email{paul.frater@wisconsin.gov} (\href{https://orcid.org/0000-0002-7237-6563}{ORCID})
+
+Authors:
+\itemize{
+  \item Zac Driscoll \email{zdriscoll@mmsd.com} (\href{https://orcid.org/0000-0002-8233-0980}{ORCID})
+}
+
+}

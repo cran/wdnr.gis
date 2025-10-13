@@ -16,7 +16,7 @@ get_wis_landcover(
 )
 
 get_wis_imagery(
-  service = "EN_Image_Basemap_Leaf_Off",
+  service = "EN_Image_Basemap_Latest_Leaf_Off",
   county = NULL,
   watershed_code = NULL,
   watershed_name = NULL,
@@ -37,7 +37,7 @@ watershed}
 
 \item{sf_object}{Any sf polygon object}
 
-\item{...}{Additional arguments to be passed to \code{\link{get_map_layer}}}
+\item{...}{Additional arguments to be passed to \code{\link[arcpullr]{get_map_layer}}}
 }
 \value{
 A "RasterLayer" object

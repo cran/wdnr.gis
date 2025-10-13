@@ -17,7 +17,7 @@ test_lines <-
     list(
       rbind(c(-88.529, 45.435), c(-88.53, 45.435)),
       rbind(c(-88.4911, 45.4446), c(-88.48936, 45.4479)
-            )))%>%
+      )))%>%
   st_sfc(crs = 4326)%>%
   st_as_sf()
 #build polygon object
@@ -36,7 +36,7 @@ test_that("get_hydro_layer spatial query by polygon returns
               layer_type = "polygons",
               sp_rel = "esriSpatialRelOverlaps")
             expect_equal(otter_lake$WATERBODY_WBIC,549400)
-            })
+          })
 test_that("get_hydro_layer - spatial query by sf_linestring returns
           the correct WATERBODY_WBIC",{
             otter_lake <- get_hydro_layer(
@@ -71,19 +71,19 @@ test_that("get_hydro_layer - spatial query by sf_multipoint returns
           })
 test_that("get_hydro_layer - test that the 'layer_type' arguement uses
           the correct service and returns a multilinestring",{
-  otter_creek <- get_hydro_layer(
-    sf_object = test_polygon,
-    layer_type = "line",
-    sp_rel = "esriSpatialRelCrosses")
-  expect_equal(as.character(sf::st_geometry_type(otter_creek)),
-               "MULTILINESTRING")
+            otter_creek <- get_hydro_layer(
+              sf_object = test_polygon,
+              layer_type = "line",
+              sp_rel = "esriSpatialRelCrosses")
+            expect_equal(as.character(sf::st_geometry_type(otter_creek)),
+                         "MULTILINESTRING")
           })
 
 test_that("get_hydro_layer - test that sql where returns the
           correct layer",{
-  otter_creek <- get_hydro_layer(where = "RIVER_SYS_WBIC = 547200")
-  expect_equal(otter_creek$RIVER_SYS_NAME[1],"Otter Creek")
-})
+            otter_creek <- get_hydro_layer(where = "RIVER_SYS_WBIC = 547200")
+            expect_equal(otter_creek$RIVER_SYS_NAME[1],"Otter Creek")
+          })
 
 # get_watershed_layer -----------------------------------------------------
 test_polygon <-
@@ -169,7 +169,7 @@ test_polygon <-
     c(-87.93636, 43.03516),
     c(-87.93745, 43.03628),
     c(-87.93859, 43.03514)
-    )
+  )
 #tests
 test_that("get_roads_layer - spatial query by polygon returns
           correct road name",{
@@ -207,9 +207,13 @@ test_that("get_roads_layer - spatial query by polyline returns
 #             expect_equal(roads$NAME[1:2],c("East-West Freeway", "Zoo Freeway"))
 #           })
 
-test_that("get_roads_layer - sql where statement returns the correct
-          road name",{
-            roads <- get_roads_layer(
-              where = "OSM_ID = 50487000",layer_type ="major_roads")
-            expect_equal(roads$NAME[1],"East-West Freeway")
-          })
+test_that(
+  "get_roads_layer-sql where statement returns the correct road name",
+  {
+    roads <- get_roads_layer(
+      where = "OSM_ID = '4244078'",
+      layer_type ="minor_roads"
+    )
+    expect_equal(roads$NAME[1], "Soo Marie Avenue")
+  }
+)

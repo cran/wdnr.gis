@@ -1,19 +1,27 @@
-current_sections <- c(
-  "AM_WARP_MAP", "DG_HiCap", "DG_Viewer", "DG_Well_Driller", "DW_Map_Cached",
-  "DW_Map_Dynamic", "ER_Biotics", "ER_Bird_Breeding_Atlas", "FM_Trout",
-  "LF_DML", "PR_TRAILS", "RR_Sites_Map", "WM_CWD", "WM_LMS", "WM_VPA",
-  "WM_WSHED", "WT_Condition_Viewer", "WT_SWDV", "WT_TMDL", "WY_Lakes_AIS",
-  "WY_PRESTO", "CS_Offices", "DG_Groundwater_Retrieval_Network", "EM_PFAS",
-  "FN_FLEET", "FR_IFFRS", "FR_IFFRS_TRN", "FR_WIGO_MAP", "FR_WIS_BURN",
-  "LF_Master_Planning", "OGW_Beach_Monitoring", "TS_AGOL_STAGING_SERVICES",
-  "WA_Waste", "WM_APIP", "WT_DAM", "WT_SW_PERMIT", "WY_Wastewater",
-  "WY_WETLAND", "DW_Elevation", "DW_Imagery", "DW_Land_Cover",
-  "FR_URBAN_FORESTRY"
-)
-trout_services <- c(
-  "FM_TROUT_ANNO_WTM_Ext", "FM_TROUT_HAB_SITES_WTM_Ext",
-  "FM_TROUT_NONDNR_EASEMENTS_WTM_Ext", "FM_TROUT_REGS_WTM_Ext"
-)
+current_sections <- unique(service_urls$section)
+
+# former current sections
+# c(
+#   "AM_WARP_MAP", "DG_HiCap", "DG_Viewer", "DG_Well_Driller", "DW_Map_Cached",
+#   "DW_Map_Dynamic", "ER_Biotics", "ER_Bird_Breeding_Atlas", "FM_Trout",
+#   "LF_DML", "PR_TRAILS", "RR_Sites_Map", "WM_CWD", "WM_LMS", "WM_VPA",
+#   "WM_WSHED", "WT_Condition_Viewer", "WT_SWDV", "WT_TMDL", "WY_Lakes_AIS",
+#   "WY_PRESTO", "CS_Offices", "DG_Groundwater_Retrieval_Network", "EM_PFAS",
+#   "FN_FLEET", "FR_IFFRS", "FR_IFFRS_TRN", "FR_WIGO_MAP", "FR_WIS_BURN",
+#   "LF_Master_Planning", "OGW_Beach_Monitoring", "TS_AGOL_STAGING_SERVICES",
+#   "WA_Waste", "WM_APIP", "WT_DAM", "WT_SW_PERMIT", "WY_Wastewater",
+#   "WY_WETLAND", "DW_Elevation", "DW_Imagery", "DW_Land_Cover",
+#   "FR_URBAN_FORESTRY"
+# )
+trout_services <-
+  service_urls |>
+  dplyr::filter(section == "FM_Trout") |>
+  dplyr::pull(service) |>
+  unique()
+# c(
+#   "FM_TROUT_ANNO_WTM_Ext", "FM_TROUT_HAB_SITES_WTM_Ext",
+#   "FM_TROUT_NONDNR_EASEMENTS_WTM_Ext", "FM_TROUT_REGS_WTM_Ext"
+# )
 
 
 test_that("list_sections works appropriately", {
@@ -66,18 +74,42 @@ test_that("match_sections works appropriately", {
 })
 
 test_that("match_services works appropriately", {
-  expect_length(match_services("Fish"), 2)
+  exp_fish_match <-
+    grep("Fish", service_urls$service, ignore.case = TRUE, value = TRUE) |>
+    unique() |>
+    length()
+  expect_length(match_services("Fish"), exp_fish_match)
+  exp_wt_fish_match <-
+    service_urls |>
+    dplyr::filter(
+      grepl("WT", section),
+      grepl("Fish", service, ignore.case = TRUE)
+    ) |>
+    dplyr::pull(service) |>
+    unique()
   expect_equal(
     match_services("Fish", sections = match_sections("WT")),
-    "WT_Fisheries_Waters_WTM_Ext"
+    exp_wt_fish_match
   )
   lc_service <- "EN_Land_Cover2_Lev4"
   expect_equal(match_services(lc_service, exact = TRUE), lc_service)
 })
 
 test_that("match_layers works appropriately", {
-  expect_length(match_layers("fish"), 43)
-  expect_length(match_layers("fish|trout"), 56)
+  exp_fish_match <-
+    service_urls |>
+    dplyr::filter(grepl("fish", layer, ignore.case = TRUE)) |>
+    dplyr::pull(layer) |>
+    unique() |>
+    length()
+  exp_fish_trout_match <-
+    service_urls |>
+    dplyr::filter(grepl("fish|trout", layer, ignore.case = TRUE)) |>
+    dplyr::pull(layer) |>
+    unique() |>
+    length()
+  expect_length(match_layers("fish"), exp_fish_match)
+  expect_length(match_layers("fish|trout"), exp_fish_trout_match)
   expect_equal(match_layers("stream", sections = match_sections("Trout")),
                "Trout Stream Regulations")
   expect_equal(match_layers("Trout Waters", exact = TRUE), "Trout Waters")

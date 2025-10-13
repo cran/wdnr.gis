@@ -500,7 +500,7 @@ get_roads_layer <- function (county = NULL,
 #'
 #' @inheritParams get_hydro_layer
 #' @param service A string describing the service to be pulled.
-#' @param ... Additional arguments to be passed to \code{\link{get_map_layer}}
+#' @param ... Additional arguments to be passed to \code{\link[arcpullr]{get_map_layer}}
 #'
 #' @return A "RasterLayer" object
 #' @export
@@ -534,7 +534,7 @@ get_wis_landcover <- function(service = "EN_Land_Cover2_Lev2",
 
 #' @rdname get_wis_raster_layer
 #' @export
-get_wis_imagery <- function(service = "EN_Image_Basemap_Leaf_Off",
+get_wis_imagery <- function(service = "EN_Image_Basemap_Latest_Leaf_Off",
                             county = NULL,
                             watershed_code = NULL,
                             watershed_name = NULL,
@@ -570,7 +570,7 @@ get_wis_imagery <- function(service = "EN_Image_Basemap_Leaf_Off",
 #' @param ... Additional arguments to pass to the \code{get_raster_function}
 #'
 #' @return A Raster* object dependent on \code{get_raster_function}
-get_wis_rasters<- function(service,
+get_wis_rasters <- function(service,
                            get_raster_function,
                            county = NULL,
                            watershed_code = NULL,
