@@ -1,4 +1,4 @@
-94d2c555c7addac17e3e896f81622875 *DESCRIPTION
+4777e2b8325171e9f6181b86ca173c08 *DESCRIPTION
 a30b847f0afc2c13babeaea3e53898db *NAMESPACE
 505180cd02ec1d1bc337b84c4cf1c4cd *R/data.R
 fd87d905a73d18f8775c7fa22f43caf6 *R/filter_layers.R
@@ -7,7 +7,7 @@ e568f5696ed5c3050fcfc3cc57ba53b4 *R/get_layer_functions.R
 b5c699feaa5995d0ce610944d29cd1ce *R/sf_polygon_data.R
 1d0ac392ef3106ff1a5d8d41ec0714ef *R/url_objects.R
 9840e1a80c637ca6a2bb61384817b9ae *R/utilities.R
-6ec27bbb55bff851dd77e9a72a60edd9 *R/wdnr.gis-package.R
+722f58e20ad93bfd21c80ae65f6bc3ab *R/wdnr.gis-package.R
 a74794f0e457f96877e82f7152f74830 *build/vignette.rds
 16273024e42fc04a1220591ca476f3e6 *data/service_urls.rda
 9062e6871efc3814b50264c4aa4c67bf *data/watershed_lookup.rda
@@ -30,7 +30,7 @@ c1a15afc3db6f242839e4ff628e69bc5 *man/get_wis_raster_layer.Rd
 bb70c876098a15184a4e668d4aa89c97 *man/match_funs.Rd
 6c4370c43374ae755524ebce472375e8 *man/match_watershed_name.Rd
 d40098c4e706234d920088822095da2f *man/standardize_county_names.Rd
-9b278cd76297ee3b759388a502c0e082 *man/wdnr.gis-package.Rd
+3353c0ac08a553d0422ed15ce7ae642d *man/wdnr.gis-package.Rd
 806edd6b0e1744a5abab481e9b108466 *man/wi_example_data.Rd
 5a01269d28e5f13bd6e00e6ae34ee30c *man/wi_example_polys.Rd
 070734c562eb7d6d97f2d9d3d1e7a627 *tests/testthat.R

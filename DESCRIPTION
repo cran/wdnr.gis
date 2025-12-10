@@ -1,7 +1,7 @@
 Package: wdnr.gis
 Type: Package
 Title: Pull Spatial Layers from 'WDNR ArcGIS REST API'
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: c(person(given = "Paul",
            family = "Frater",
            role = c("aut", "cre"),
@@ -26,8 +26,8 @@ Suggests: testthat (>= 3.0.0), knitr, rmarkdown
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-10-13 18:24:05 UTC; fratepnd
+Packaged: 2025-12-10 21:04:59 UTC; fratepnd
 Author: Paul Frater [aut, cre] (ORCID: <https://orcid.org/0000-0002-7237-6563>),
   Zac Driscoll [aut] (ORCID: <https://orcid.org/0000-0002-8233-0980>)
 Repository: CRAN
-Date/Publication: 2025-10-13 18:40:02 UTC
+Date/Publication: 2025-12-10 21:40:02 UTC
